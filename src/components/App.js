@@ -16,25 +16,41 @@ export default class App extends Component {
 
   checkItem = id => {
     this.setState(({ todos }) => {
-      const idx = todos.findIndex(el => el.id === id);
-      todos.map(todo => {
-        if (idx === id) {
-          todo.checked = !todo.checked;
-        }
-        return { todos: todos };
-      });
+      const index = todos.findIndex(el => el.id === id);
+      const oldItem = todos[index];
+      const newItem = { ...oldItem, checked: !oldItem.checked };
+      const newTodos = [
+        ...todos.slice(0, index),
+        newItem,
+        ...todos.slice(index + 1)
+      ];
+      return {
+        todos: newTodos
+      };
     });
   };
 
   deleteItem = id => {
     this.setState(({ todos }) => {
-      todos.filter(todo => {
-        return todo.id === id;
-      });
+      const index = todos.findIndex(el => el.id === id);
+      const newTodos = [...todos.slice(0, index), ...todos.slice(index + 1)];
+      return {
+        todos: newTodos
+      };
+    });
+  };
+
+  addItem = item => {
+    this.setState(({ todos }) => {
+      const newTodos = [...todos, item];
+      return {
+        todos: newTodos
+      };
     });
   };
 
   render() {
+    console.log(this.checkItem());
     return (
       <div>
         <h1>ToDo List</h1>
@@ -42,6 +58,7 @@ export default class App extends Component {
           todos={this.state.todos}
           onChecked={this.checkItem}
           onDeleted={this.deleteItem}
+          onChange={this.addItem}
         />
       </div>
     );

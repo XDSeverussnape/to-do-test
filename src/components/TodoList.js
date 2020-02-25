@@ -7,6 +7,7 @@ export default function TodoList(props) {
       todo={props}
       onChaked={props.onChecked}
       onDeleted={props.onDeleted}
+      onAdd={props.onChange}
     />
   );
 }

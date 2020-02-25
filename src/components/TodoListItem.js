@@ -3,9 +3,8 @@ import React, { Component } from "react";
 export default class TodoListItem extends Component {
   render() {
     const { todos } = this.props.todo;
-    const { onChaked } = this.props;
-    const { onDeleted } = this.props;
-    console.log(todos);
+    const { onChaked, onDeleted, onAdd } = this.props;
+
     const cls = [];
 
     if (todos.checked) {
@@ -17,9 +16,8 @@ export default class TodoListItem extends Component {
         <li className={cls} key={elem.id}>
           <input
             type="checkbox"
-            //checked={!elem.checked}
+            checked={elem.checked}
             onChange={() => {
-              console.log(elem);
               onChaked(elem.id);
             }}
           />
@@ -37,7 +35,7 @@ export default class TodoListItem extends Component {
     });
     return (
       <ul>
-        <input />
+        <input onChange={e => console.log(e.keyCode)} />
         {todoItems}
       </ul>
     );
