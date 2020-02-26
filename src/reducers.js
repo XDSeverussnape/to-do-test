@@ -60,9 +60,10 @@ const deleteTodo = (id, todos) => {
 };
 
 const updataTodo = ({ value, id }, todos) => {
+  const upData = new Date().toString();
   const newArray = todos.map(item => {
     if (item.id === id) {
-      return { ...item, title: value };
+      return { ...item, title: value, data: upData };
     }
     return item;
   });
