@@ -1,43 +1,61 @@
-import React, { Component } from "react";
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { checkboxTodo, deleteTodo } from "../actions/actions";
+import EditText from "./Editebletext";
+import Data from "./Data";
 
-export default class TodoListItem extends Component {
-  render() {
-    const { todos } = this.props.todo;
-    const { onChaked, onDeleted, onAdd } = this.props;
+function TodoListItem(props) {
+  const { checkItem, onDeleted, checked, style, id, title, data } = props;
 
-    const cls = [];
+  return (
+    <div className="d-flex">
+      <div className={checked ? style : null} key={id}>
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={() => {
+            checkItem(id);
+          }}
+        />
+        <EditText title={title} id={id} />
 
-    if (todos.checked) {
-      cls.push("done");
-    }
-
-    const todoItems = todos.map(elem => {
-      return (
-        <li className={cls} key={elem.id}>
-          <input
-            type="checkbox"
-            checked={elem.checked}
-            onChange={() => {
-              onChaked(elem.id);
-            }}
-          />
-          {elem.title}
-          <i
-            className="material-icons red-text"
-            onClick={() => {
-              onDeleted(elem.id);
-            }}
-          >
-            delete
-          </i>
-        </li>
-      );
-    });
-    return (
-      <ul>
-        <input onChange={e => console.log(e.keyCode)} />
-        {todoItems}
-      </ul>
-    );
-  }
+        <i
+          className="material-icons red-text"
+          onClick={() => {
+            onDeleted(id);
+          }}
+        >
+          delete
+        </i>
+      </div>
+      <Data data={data} id={id} />
+    </div>
+  );
 }
+
+//const mapStateToProps = store => {
+// console.log(store);
+//  return { todos: store.todos };
+//};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    checkItem: id => {
+      dispatch(checkboxTodo(id));
+    },
+    onDeleted: id => {
+      dispatch(deleteTodo(id));
+    }
+  };
+};
+
+export default connect(null, mapDispatchToProps)(TodoListItem);
+
+TodoListItem.propTypes = {
+  onDeleted: PropTypes.func.isRequired,
+  checked: PropTypes.bool.isRequired,
+  style: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired
+};

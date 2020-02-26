@@ -20,3 +20,7 @@ code {
   cursor: pointer;
   color: red;
 }
+
+.line {
+  text-decoration: line-through;
+}
