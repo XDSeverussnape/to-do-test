@@ -14,3 +14,15 @@ todos: newTodos
 };
 this.setState(state => console.log(clg(state)) || clg(state));
 };
+
+
+
+https://redux.js.org/basics/usage-with-react/
+
+https://redux.js.org/basics/reducers/
+
+https://redux.js.org/basics/store/
+
+https://react-redux.js.org/introduction/quick-start
+
+https://redux-docs.netlify.com/recipes/configuring-your-store/
